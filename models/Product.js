@@ -1,4 +1,3 @@
-// Product.js
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection");
 
@@ -47,5 +46,12 @@ Product.init(
     modelName: "product",
   }
 );
+
+Product.associate = (models) => {
+  Product.belongsTo(models.Category, {
+    foreignKey: "category_id",
+    onDelete: "CASCADE",
+  });
+};
 
 module.exports = Product;

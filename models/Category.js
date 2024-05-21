@@ -1,4 +1,3 @@
-// Category.js
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connection.js");
 
@@ -25,5 +24,12 @@ Category.init(
     modelName: "category",
   }
 );
+
+Category.associate = (models) => {
+  Category.hasMany(models.Product, {
+    foreignKey: "category_id",
+    onDelete: "CASCADE",
+  });
+};
 
 module.exports = Category;

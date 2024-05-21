@@ -2,7 +2,6 @@
 const router = require("express").Router();
 const { Product, Category, Tag, ProductTag } = require("../../models");
 
-// The `/api/products` endpoint
 
 // get all products
 router.get("/", async (req, res) => {
@@ -93,16 +92,30 @@ router.put("/:id", (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   try {
+    // Delete all ProductTags associated with the product
+    await ProductTag.destroy({
+      where: {
+        product_id: req.params.id,
+      },
+    });
+
+    // Delete the product
     const productData = await Product.destroy({
       where: { id: req.params.id },
     });
+
     if (!productData) {
-      res.status(404).json({ message: "No product found with this id!" });
-      return;
+      return res
+        .status(404)
+        .json({ message: "No product found with this id!" });
     }
-    res.status(200).json(productData);
+
+    res
+      .status(200)
+      .json({ message: "Product has been removed from the database" });
   } catch (err) {
-    res.status(500).json(err);
+    console.error("Error deleting product:", err); // Log the error for debugging
+    return res.status(500).json({ error: err.message });
   }
 });
 
