@@ -39,4 +39,4 @@ This project sets up the back end for an e-commerce website using Express.js and
     - DELETE `/api/tags/:id`
 
 ## Walkthrough Video
-[Link to Walkthrough Video](your_video_link)
+[Link to Walkthrough Video](https://youtu.be/G6ah3lQqgXQ)
